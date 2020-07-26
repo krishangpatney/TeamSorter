@@ -1,4 +1,5 @@
 // A function for creating teams
+// Lets you use the enter for better funtionality
 
 // make an array of people 
 var people = {};
@@ -19,7 +20,7 @@ function addPerson(){
 
     var person = document.getElementById('player').value;
     var skill = document.getElementById("textInput").innerHTML;
-
+    
     if (person != ""){
         people[person] = skill;                
         document.querySelector(".list-group").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill :  {s}</li>".replace("{n}", (person)).replace("{s}", skill);
