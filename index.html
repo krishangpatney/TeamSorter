@@ -42,7 +42,8 @@
                             
                             <br>
                             <a id = "addPerson" onclick="addPerson()" style="color: white;" class="btn btn-primary">Add Person</a>
-                            <a id = "makeTeam" onclick="makeTeam()" style="color: white;" class="btn btn-primary">Make Team</a>
+                            <a id = "makeTeam" onclick="makeTeam()" style="color: white;" class="btn btn-primary">Skill Based Team</a>
+                            <a id = "randomizedTeam" onclick="randomizedTeam()" style="color: white;" class="btn btn-primary">Randomized Team</a>
                         </div>
                         <span class="error"><p id="error"></p></span>
                     </center>
@@ -78,8 +79,7 @@
 
     // make an array of people 
         var people = {};
-        const players = [];
-        var sortedPlayers = [];
+        
 
         // var numberOfTeams = document.getElementById("numberOfTeams").value;
         var numberOfTeams = 2;
@@ -108,6 +108,9 @@
         
         // Sorts highest to lowest 
         function skillSort(){
+
+            const players = [];
+            var sortedPlayers = [];
 
             for (var key in people){
                 
@@ -157,11 +160,62 @@
             even(sortedPlayers);
         }
 
+        // Shuffle Players
+        function shuffle(array) {
+            var i;
+            var playerNumbers = array.length;
+            copy = [];
+            while (playerNumbers){
+                i = Math.floor(Math.random() * playerNumbers--);
+
+                copy.push(array.splice(i,1)[0]);
+            }
+            return copy; 
+        }
+
+        function splitArray(arr,n){
+            var splits = Math.max(arr.length/n ,1);
+            var split = [];
+            for (var i = 0; i < n; i++) {
+                if(splits*(i+1)<=arr.length)split.push(arr.slice(splits*i, splits*(i+1)));
+            }
+            return split; 
+        }
+
+        // Randomized teams instead of skill based
+        function randomizedTeam(){
+            cleanBoard();
+            const players = [];
+
+            // Add people to player array
+            for (var key in people){
+                
+                // key, dict[key]
+                person = {"name" : key, "skill" : parseInt(people[key])};
+                players.unshift(person);
+            }
+            // Add player
+            var playerList = [];
+            players.forEach((element) => {
+                playerList.push(element.name);
+            });
+
+            var shuffledPlayers = shuffle(playerList);
+
+            var teams = splitArray(shuffledPlayers,2);
+
+            for (i=0; i <= teams[0].length-1; i++) {
+                document.getElementById("team1").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill : {s} </li>".replace("{n}", (teams[0][i])).replace("{s}", people[teams[0][i]]);
+            }
+            for (i=0; i <= teams[1].length-1; i++) {
+                document.getElementById("team2").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill : {s} </li>".replace("{n}", (teams[1][i])).replace("{s}", people[teams[1][i]]);
+            }
+
+        }
+
         function makeTeam(){
+            cleanBoard();
             skillSort();
-            document.getElementById("players").style.display = "none";
-            document.getElementById("team1card").style.display = "block";
-            document.getElementById("team2card").style.display = "block";
 
             for (i=0; i <= team1.length-1; i++) {
                 document.getElementById("team1").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill : {s} </li>".replace("{n}", (team1[i])).replace("{s}", people[team1[i]]);
@@ -172,7 +226,12 @@
                 document.getElementById("team2").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill : {s} </li>".replace("{n}", (team2[i])).replace("{s}", people[team2[i]]);
                 
             }
-            
+        }
+
+        function cleanBoard(){
+            document.getElementById("players").style.display = "none";
+            document.getElementById("team1card").style.display = "block";
+            document.getElementById("team2card").style.display = "block";
         }
     </script>
 
