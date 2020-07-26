@@ -13,7 +13,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="teams.js"></script>
-
     </head>
     <body style = "max-width: 900px;">
         <div class="card">
@@ -26,14 +25,14 @@
                             <div class="form-row">
                                 <div class="col-md-8 mb-2">
                                     <br>
-                                    <input type="text" class="form-control" id="player" aria-describedby="emailHelp" placeholder="Player Name - required"  onkeydown = "if (event.keyCode == 13)
+                                    <input type="text" class="form-control" id="player" placeholder="Player Name - required"  onkeydown = "if (event.keyCode == 13)
                                     document.getElementById('addPerson').click()" >
                                 </div>
       
                                 <div class="col-md-4 mb-2">
                                     <div class="slidecontainer">
                                         Skill Level<br>
-                                        <input type="range" name="skill" min="0" max="10" value="0" style="width: 180px;" onchange="updateTextInput(this.value);">
+                                        <input type="range" id="slider" name="skill" min="0" max="10" value="0" style="width: 180px;" onchange="updateTextInput(this.value);">
                                         <br><a id="textInput"> 0 </a>
 
                                     </div>
@@ -77,6 +76,15 @@
         </div>
     </body>
 
-   
+    <script>
+        var slider = document.getElementById("slider");
+        var output = document.getElementById("textInput");
+        output.innerHTML = slider.value; 
+
+        // Update the current slider value
+        slider.oninput = function() {
+           output.innerHTML = this.value;
+        }
+    </script>
 
 </html>

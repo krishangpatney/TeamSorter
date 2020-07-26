@@ -9,9 +9,7 @@ var people = {};
 var numberOfTeams = 2;
 
 
-function updateTextInput(val) {
-    document.getElementById("textInput").innerHTML = val;
-}
+
 
 function addPerson(){
     document.getElementById("players").style.display = "block";
