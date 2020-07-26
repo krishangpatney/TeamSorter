@@ -8,9 +8,6 @@ var people = {};
 // var numberOfTeams = document.getElementById("numberOfTeams").value;
 var numberOfTeams = 2;
 
-
-
-
 function addPerson(){
     document.getElementById("players").style.display = "block";
     document.getElementById("team1card").style.display = "none";
@@ -19,15 +16,22 @@ function addPerson(){
     var person = document.getElementById('player').value;
     var skill = document.getElementById("textInput").innerHTML;
     
-    if (person != ""){
-        people[person] = skill;                
-        document.querySelector(".list-group").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill :  {s}</li>".replace("{n}", (person)).replace("{s}", skill);
-        document.getElementById('error').innerHTML = '';
-    } else {
-        nameError = "Please enter a name";
+    if (person in people){
+        nameError = "Player already exists";
         document.getElementById("error").innerHTML = nameError; 
     }
-    // resits 
+    else{
+        if (person != ""){
+            people[person] = skill;                
+            document.querySelector(".list-group").innerHTML += "<li class=\"list-group-item\">Name : {n} || Skill :  {s}</li>".replace("{n}", (person)).replace("{s}", skill);
+            document.getElementById('error').innerHTML = '';
+        } else {
+            nameError = "Please enter a name";
+            document.getElementById("error").innerHTML = nameError; 
+        }
+    }
+    
+    // Resets value 
     document.getElementById('player').value = '';
 }
 
